@@ -102,4 +102,5 @@ public class SnakeNLadder {
 
         } while ("r".equals(rPressed));
     }
+
 }
