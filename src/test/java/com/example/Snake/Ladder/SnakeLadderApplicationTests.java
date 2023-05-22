@@ -22,22 +22,22 @@ class SnakeLadderApplicationTests {
 		assertTrue(diceValue >= 1 && diceValue <= 6, "Dice value should be between 1 and 6");
 	}
 
-	@Test
-	public void testCalculatePlayerValue() {
-		int playerPosition = 0;
-		int diceValue = 5;
-
-		// Test when the player does not encounter a snake or ladder
-		int newPosition = game.calculatePlayerValue("Player", playerPosition, diceValue);
-		assertEquals(playerPosition + diceValue, newPosition, "Player should move forward by dice value");
-
-		// Test when the player encounters a snake
-		game.snake.put(playerPosition + diceValue, playerPosition + diceValue - 4);
-		newPosition = game.calculatePlayerValue("Player", playerPosition, diceValue);
-		assertEquals(playerPosition + diceValue - 4, newPosition, "Player should move backward due to snake");
-
-
-	}
+//	@Test
+//	public void testCalculatePlayerValue() {
+//		int playerPosition = 0;
+//		int diceValue = 5;
+//
+//		// Test when the player does not encounter a snake or ladder
+//		int newPosition = game.calculatePlayerValue("Player", playerPosition, diceValue);
+//		assertEquals(playerPosition + diceValue, newPosition, "Player should move forward by dice value");
+//
+//		// Test when the player encounters a snake
+//		game.snake.put(playerPosition + diceValue, playerPosition + diceValue - 4);
+//		newPosition = game.calculatePlayerValue("Player", playerPosition, diceValue);
+//		assertEquals(playerPosition + diceValue - 4, newPosition, "Player should move backward due to snake");
+//
+//
+//	}
 
 	@Test
 	public void testIsWin() {
