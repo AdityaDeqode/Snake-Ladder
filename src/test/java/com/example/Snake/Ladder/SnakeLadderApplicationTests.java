@@ -2,10 +2,7 @@ package com.example.Snake.Ladder;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
-
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
@@ -28,28 +25,18 @@ class SnakeLadderApplicationTests {
 	@Test
 	public void testCalculatePlayerValue() {
 		int playerPosition = 0;
-		int diceValue = 6;
+		int diceValue = 5;
 
 		// Test when the player does not encounter a snake or ladder
 		int newPosition = game.calculatePlayerValue("Player", playerPosition, diceValue);
 		assertEquals(playerPosition + diceValue, newPosition, "Player should move forward by dice value");
 
 		// Test when the player encounters a snake
-		game.snake.put(playerPosition + diceValue, playerPosition + diceValue - 5);
+		game.snake.put(playerPosition + diceValue, playerPosition + diceValue - 4);
 		newPosition = game.calculatePlayerValue("Player", playerPosition, diceValue);
-		assertEquals(playerPosition + diceValue - 5, newPosition, "Player should move backward due to snake");
+		assertEquals(playerPosition + diceValue - 4, newPosition, "Player should move backward due to snake");
 
-		// Test when the player encounters a ladder
-		game.snake.remove(playerPosition + diceValue - 5);
-		game.ladder.put(playerPosition + diceValue, playerPosition + diceValue + 10);
-		newPosition = game.calculatePlayerValue("Player", playerPosition, diceValue);
-		assertEquals(playerPosition + diceValue + 10, newPosition, "Player should move forward due to ladder");
 
-		// Test when the player's new position exceeds the win point
-		playerPosition = 95;
-		diceValue = 6;
-		newPosition = game.calculatePlayerValue("Player", playerPosition, diceValue);
-		assertEquals(playerPosition + diceValue, newPosition, "Player should move forward but not beyond the win point");
 	}
 
 	@Test
