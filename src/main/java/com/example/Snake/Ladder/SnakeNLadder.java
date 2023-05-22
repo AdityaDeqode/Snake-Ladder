@@ -6,6 +6,8 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class SnakeNLadder {
+
+    Scanner scan= new Scanner(System.in);
     final static int WINPOINT = 100;
      Map<Integer, Integer> snake = new HashMap<>();
      Map<Integer, Integer> ladder = new HashMap<>();
@@ -31,19 +33,19 @@ public class SnakeNLadder {
     }
 
 
-    public int calculatePlayerValue(String player, int playerPosition, int diceValue) {
+    public int calculatePlayerValue(int playerId, int playerPosition, int diceValue) {
         int playerNewPosition=playerPosition+diceValue;
 
         if (playerNewPosition > WINPOINT)
             return playerPosition;
 
         if (null !=snake.get(playerNewPosition)) {
-            System.out.println("Oops.." + player + "swallowed by the snake..");
+            System.out.println("Oops.. Player " + (playerId+1) + " swallowed by the snake..");
             playerNewPosition=snake.get(playerNewPosition);
         }
 
         if (null !=ladder.get(playerNewPosition)) {
-            System.out.println("YAY!  " + player+ "climbing the ladder..");
+            System.out.println("YAY!  Player " + (playerId+1) + " climbing the ladder..");
             playerNewPosition=ladder.get(playerNewPosition);
         }
 
@@ -55,38 +57,52 @@ public class SnakeNLadder {
     }
 
     public void startGame() {
-        int player1Position=0, player2Position=0;
-        int currentPlayer=-1;
+
+        int number;
+        System.out.println("Please choose number of player by entering the number value  ");
+        number= Integer.parseInt(scan.next());
+        int[] numberOfPlayer = new int[number];
+
+
         Scanner scan= new Scanner(System.in);
         String rPressed;
         int diceValue = 0;
         do {
-            System.out.println(currentPlayer == -1
-                    ? "\n\nFirst player's turn" : "\n\nSecond player's turn");
             System.out.println("Press 'r' to roll Dice");
             rPressed=scan.next();
-            diceValue=rollDice();
 
-            if (currentPlayer==-1) {
-                player1Position=calculatePlayerValue("First Player", player1Position, diceValue);
-                System.out.println("First Player Position:"+player1Position);
-                System.out.println("Second Player Position:"+player2Position);
+            for(int i =0;i <numberOfPlayer.length; i++){
+                diceValue=rollDice();
+                numberOfPlayer[i] = calculatePlayerValue(i, numberOfPlayer[i], diceValue);
+                System.out.println("Player Number " +(i+1)  +  " Position:" + numberOfPlayer[i]);
                 System.out.println("-------------------------");
-                if (isWin(player1Position)) {
-                    System.out.println("Congratulations! First player won");
+                if (isWin(numberOfPlayer[i])) {
+                    System.out.println("Congratulations! Player " + (i+1) + " Won the Game ");
                     return;
                 }
-            } else {
-                player2Position = calculatePlayerValue("Second Player", player2Position, diceValue);
-                System.out.println("First Player Position:"+player1Position);
-                System.out.println("Second Player Position:"+player2Position);
-                System.out.println("-------------------------");
-                if (isWin(player2Position)) {
-                    System.out.println("Congratulations! Second player won");
-                    return;
-                }
+
             }
-            currentPlayer = -currentPlayer;
+
+//            if (currentPlayer==-1) {
+//                player1Position=calculatePlayerValue("First Player", player1Position, diceValue);
+//                System.out.println("First Player Position:"+player1Position);
+//                System.out.println("Second Player Position:"+player2Position);
+//                System.out.println("-------------------------");
+//                if (isWin(player1Position)) {
+//                    System.out.println("Congratulations! First player won");
+//                    return;
+//                }
+//            } else {
+//                player2Position = calculatePlayerValue("Second Player", player2Position, diceValue);
+//                System.out.println("First Player Position:"+player1Position);
+//                System.out.println("Second Player Position:"+player2Position);
+//                System.out.println("-------------------------");
+//                if (isWin(player2Position)) {
+//                    System.out.println("Congratulations! Second player won");
+//                    return;
+//                }
+//            }
+//            currentPlayer = -currentPlayer;
         } while ("r".equals(rPressed));
     }
 }
